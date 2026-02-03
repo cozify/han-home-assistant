@@ -1,0 +1,20 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Cozify HAN",
+        "description": "Syötä Cozify HAN -laitteesi IP-osoite. Laite löytyy yleensä osoitteesta 192.168.x.x.",
+        "data": {
+          "host": "IP-osoite"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Yhteyden muodostaminen epäonnistui. Tarkista IP-osoite ja varmista, että laite on verkossa."
+    },
+    "abort": {
+      "already_configured": "Tämä laite on jo määritetty."
+    }
+  },
+  "title": "Cozify HAN"
+}

@@ -1,0 +1,44 @@
+blueprint:
+  name: Cozify HAN Kokonaisteho-ilmoitus (W)
+  description: Lähettää ilmoituksen valittuun puhelimeen, kun tehoraja ylittyy.
+  domain: automation
+  input:
+    power_sensor:
+      name: Tehosensori
+      description: Valitse Cozify HAN -kokonaistehosensori (esim. Active Power Plus).
+      selector:
+        entity:
+          filter:
+            - integration: cozify_han
+              device_class: power
+    power_limit:
+      name: Tehoraja (W)
+      description: Wattimäärä, jonka ylityksestä ilmoitetaan.
+      default: 10000
+      selector:
+        number:
+          min: 100
+          max: 50000
+          unit_of_measurement: W
+    notify_device:
+      name: Ilmoituskohde
+      description: Valitse puhelin, johon ilmoitus lähetetään.
+      selector:
+        device:
+          integration: mobile_app
+
+mode: restart
+
+trigger:
+  - platform: numeric_state
+    entity_id: !input power_sensor
+    above: !input power_limit
+
+action:
+  - domain: mobile_app
+    type: notify
+    device_id: !input notify_device
+    title: "⚡ Korkea sähkönkulutus!"
+    message: >
+      {{ state_attr(trigger.entity_id, 'friendly_name') }} on ylittänyt rajan! 
+      Nykyinen teho: {{ trigger.to_state.state }} W.

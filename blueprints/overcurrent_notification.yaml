@@ -1,0 +1,39 @@
+blueprint:
+  name: Cozify HAN Ylivirta-ilmoitus (Kaikki vaiheet)
+  description: Lähettää ilmoituksen, jos mikä tahansa vaihe (L1, L2 tai L3) ylittää rajan.
+  domain: automation
+  input:
+    limit_value:
+      name: Virta-raja (A)
+      description: Ampeerimäärä, jonka ylityksestä ilmoitetaan kaikilla vaiheilla.
+      default: 20
+      selector:
+        number:
+          min: 1
+          max: 100
+          unit_of_measurement: A
+    notify_device:
+      name: Ilmoituskohde
+      description: Valitse puhelin, johon ilmoitus lähetetään.
+      selector:
+        device:
+          integration: mobile_app
+
+mode: restart
+
+trigger:
+  - platform: numeric_state
+    entity_id: 
+      - sensor.cozify_han_current_l1
+      - sensor.cozify_han_current_l2
+      - sensor.cozify_han_current_l3
+    above: !input limit_value
+
+action:
+  - domain: mobile_app
+    type: notify
+    device_id: !input notify_device
+    title: "⚠️ Ylivirta-varoitus"
+    message: >
+      {{ state_attr(trigger.entity_id, 'friendly_name') if state_attr(trigger.entity_id, 'friendly_name') else trigger.to_state.name }} on ylittänyt rajan! 
+      Nykyinen arvo: {{ trigger.to_state.state }}A

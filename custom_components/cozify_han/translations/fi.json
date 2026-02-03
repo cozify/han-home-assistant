@@ -1,0 +1,16 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Cozify HAN -asetukset",
+        "description": "Määritä sähkömittarin lukija.",
+        "data": {
+          "host": "Laitteen IP-osoite"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Yhteysvirhe: laitteeseen ei saada yhteyttä."
+    }
+  }
+}
