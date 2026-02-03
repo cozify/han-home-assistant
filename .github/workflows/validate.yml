@@ -1,0 +1,30 @@
+---
+name: "Validate"
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  hacs:
+    runs-on: "ubuntu-latest"
+    name: "HACS"
+    steps:
+      - name: "⤵️ Check out code from GitHub"
+        uses: "actions/checkout@v6"
+      - name: "🏠 HACS validation"
+        uses: "hacs/action@main"
+        with:
+          category: "integration"
+
+  hassfest:
+    runs-on: "ubuntu-latest"
+    name: "Hassfest"
+    steps:
+      - name: "⤵️ Check out code from GitHub"
+        uses: "actions/checkout@v6"
+      - name: "🏠 Hassfest validation"
+        uses: "home-assistant/actions/hassfest@master"
