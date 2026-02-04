@@ -2,9 +2,9 @@
   "domain": "cozify_han",
   "name": "Cozify HAN",
   "codeowners": ["@cozify"],
+  "config_flow": true,
   "dependencies": [],
   "documentation": "https://github.com/cozify/han-home-assistant",
   "iot_class": "local_polling",
-  "version": "1.0.1",
-  "config_flow": true
+  "version": "1.0.1"
 }
