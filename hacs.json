@@ -1,6 +1,5 @@
 {
   "name": "Cozify HAN",
-  "type": "integration",
   "render_readme": true,
   "zip_release": false
 }
