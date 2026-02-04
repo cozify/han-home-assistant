@@ -1,1 +1,1 @@
-DOMAIN = "han-home-assistant"
+DOMAIN = "cozify_han"
