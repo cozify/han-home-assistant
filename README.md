@@ -27,7 +27,7 @@ Custom integration for Home Assistant to fetch real-time energy data from the Co
 3. Search for "Cozify HAN".
 4. Enter the IP address of your device (e.g. 192.168.1.10) and click Submit.
 
-![Example view of the Cozify HAN Home Assistant page](images/Cozify_HAN_Home_ Assistant_INFO.png)
+![Example view of the Cozify HAN Home Assistant page](images/Cozify_HAN_Home_Assistant_INFO.png)
 
 ## Electricity Price Tracking (Example)
 
