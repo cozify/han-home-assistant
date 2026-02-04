@@ -10,7 +10,7 @@ blueprint:
         entity:
           filter:
             - integration: cozify_han
-              device_class: power
+              domain: sensor
     power_limit:
       name: Tehoraja (W)
       description: Wattimäärä, jonka ylityksestä ilmoitetaan.
