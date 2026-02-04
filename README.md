@@ -35,7 +35,7 @@ You can use the `sensor.cozify_han_power_total` sensor created by the integratio
 
 ## Automation - Blueprints
 
-- Download via Home AUtomation Settings - Automation & scenes - Blueprints - Import Blueprint - "Enter the following address"
+- Download via Home Automation Settings - Automation & scenes - Blueprints - Import Blueprint - "Enter the following address"
 
 - Blueprint base for automation that warns when any phase exceeds the specified current limit. <https://github.com/cozify/han-home-assistant/blob/main/blueprints/overcurrent_notification.yaml>
 - Blueprint base for automation that warns when any phase exceeds the specified power limit. <https://github.com/cozify/han-home-assistant/blob/main/blueprints/total_power_notification.yaml>
