@@ -1,7 +1,7 @@
 {
   "domain": "cozify_han",
   "name": "Cozify HAN",
-  "codeowners": ["@pilcq", "@cozify"],
+  "codeowners": ["@cozify"],
   "dependencies": [],
   "documentation": "https://github.com/cozify/han-home-assistant",
   "iot_class": "local_polling",
