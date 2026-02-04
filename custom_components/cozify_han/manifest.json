@@ -1,5 +1,5 @@
 {
-  "domain": "han-home-assistant",
+  "domain": "cozify_han",
   "name": "Cozify HAN",
   "codeowners": ["@pilcq", "@cozify"],
   "dependencies": [],
