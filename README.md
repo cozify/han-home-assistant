@@ -1,3 +1,12 @@
+[![Current release](https://img.shields.io/github/v/release/cozify/han-home-assistant?style=plastic&label=Current%20release&include_prereleases)](https://github.com/cozify/han-home-assistant)
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg?style=plastic)](https://github.com/hacs/integration)
+[![Stars](https://img.shields.io/github/stars/cozify/han-home-assistant?style=plastic)](https://github.com/cozify/han-home-assistant/stargazers)
+[![Last Commit](https://img.shields.io/github/last-commit/cozify/han-home-assistant?style=plastic)](https://github.com/cozify/han-home-assistant/commits/main)
+[![License](https://img.shields.io/github/license/cozify/han-home-assistant?style=plastic)](https://github.com/cozify/han-home-assistant/blob/main/LICENSE)
+<br />
+
+If you find this integration useful, we would be grateful if you could add a star ⭐. This will bring us a step closer to getting the integration officially distributed in Home Assistant without the need for a separate custom repository.
+
 # Cozify HAN for Home Assistant
 
 Custom integration for Home Assistant to fetch real-time energy data from the Cozify HAN (HAN/P1 meter).
