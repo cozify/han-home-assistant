@@ -1,44 +1,45 @@
 blueprint:
   name: Cozify HAN Kokonaisteho-ilmoitus (W)
-  description: Lähettää ilmoituksen valittuun puhelimeen, kun tehoraja ylittyy.
+  description: Lähettää ilmoituksen valittuun laitteeseen, kun haluttu tehoraja ylittyy.
   domain: automation
   input:
     power_sensor:
       name: Tehosensori
-      description: Valitse Cozify HAN -kokonaistehosensori (esim. Active Power Plus).
+      description: Valitse Cozify HAN -tehosensori.
       selector:
         entity:
           filter:
-            - integration: cozify_han
-              domain: sensor
+            domain: sensor
+            device_class: power
     power_limit:
       name: Tehoraja (W)
-      description: Wattimäärä, jonka ylityksestä ilmoitetaan.
+      description: Tehomäärä (W), jonka ylityksestä ilmoitetaan.
       default: 10000
       selector:
         number:
-          min: 100
-          max: 50000
+          min: 100.0
+          max: 50000.0
           unit_of_measurement: W
+          step: 1.0
+          mode: slider
     notify_device:
       name: Ilmoituskohde
-      description: Valitse puhelin, johon ilmoitus lähetetään.
+      description: Valitse laite, johon ilmoitus lähetetään.
       selector:
         device:
           integration: mobile_app
-
+          multiple: false
+  source_url: https://github.com/cozify/han-home-assistant/blob/main/blueprints/total_power_notification.yaml
 mode: restart
-
 trigger:
-  - platform: numeric_state
-    entity_id: !input power_sensor
-    above: !input power_limit
-
+- platform: numeric_state
+  entity_id: !input power_sensor
+  above: !input power_limit
 action:
-  - domain: mobile_app
-    type: notify
-    device_id: !input notify_device
-    title: "⚡ Korkea sähkönkulutus!"
-    message: >
-      {{ state_attr(trigger.entity_id, 'friendly_name') }} on ylittänyt rajan! 
-      Nykyinen teho: {{ trigger.to_state.state }} W.
+- domain: mobile_app
+  type: notify
+  device_id: !input notify_device
+  title: ⚡ Korkea sähkönkulutus!
+  message: '{{ state_attr(trigger.entity_id, ''friendly_name'') }} on ylittänyt rajan!  Teho: {{ trigger.to_state.state }} W.
+
+    '
