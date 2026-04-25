@@ -93,10 +93,10 @@ async def async_setup_entry(hass, entry, async_add_entities):
         CozifyEnergySensor(coordinator, entry, "ec", "Total Power Exported", device_info_init),
 
         # --- POWER (W) ---
-        CozifyArraySensor(coordinator, entry, "p", 0, "Power Total", UnitOfPower.WATT, device_info_init),
-        CozifyArraySensor(coordinator, entry, "p", 1, "Power L1", UnitOfPower.WATT, device_info_init),
-        CozifyArraySensor(coordinator, entry, "p", 2, "Power L2", UnitOfPower.WATT, device_info_init),
-        CozifyArraySensor(coordinator, entry, "p", 3, "Power L3", UnitOfPower.WATT, device_info_init),
+        CozifyArraySensor(coordinator, entry, "p", 0, "DEPRECATED Power Total", UnitOfPower.WATT, device_info_init),
+        CozifyArraySensor(coordinator, entry, "p", 1, "DEPRECATED Power L1", UnitOfPower.WATT, device_info_init),
+        CozifyArraySensor(coordinator, entry, "p", 2, "DEPRECATED Power L2", UnitOfPower.WATT, device_info_init),
+        CozifyArraySensor(coordinator, entry, "p", 3, "DEPRECATED Power L3", UnitOfPower.WATT, device_info_init),
         
         CozifyArraySensor(coordinator, entry, "pi", 0, "Power Import Total", UnitOfPower.WATT, device_info_init),
         CozifyArraySensor(coordinator, entry, "pi", 1, "Power Import L1", UnitOfPower.WATT, device_info_init),
@@ -146,6 +146,8 @@ async def async_setup_entry(hass, entry, async_add_entities):
         CozifyMaxCurrentSensor(coordinator, entry, "Current Max L2", 1, device_info_init),
         CozifyMaxCurrentSensor(coordinator, entry, "Current Max L3", 2, device_info_init),
         CozifyPeakPowerSensor(coordinator, entry, device_info_init),
+        CozifyPeakImportPowerSensor(coordinator, entry, device_info_init),
+        CozifyPeakExportPowerSensor(coordinator, entry, device_info_init),
 
         # --- JÄRJESTELMÄTIEDOT ---
         CozifyTimestampSensor(coordinator, entry, device_info_init),
@@ -276,7 +278,7 @@ class CozifyMaxCurrentSensor(CozifyBaseEntity, SensorEntity):
 class CozifyPeakPowerSensor(CozifyBaseEntity, SensorEntity):
     def __init__(self, coordinator, entry, device_info_data):
         super().__init__(coordinator, entry, device_info_data)
-        self._attr_name = "Cozify HAN Power MAX"
+        self._attr_name = "Cozify HAN DEPRECATED Power MAX"
         self._attr_unique_id = f"{entry.entry_id}_peak_p"
         self._attr_native_unit_of_measurement = UnitOfPower.WATT
         self._attr_device_class = SensorDeviceClass.POWER
@@ -299,6 +301,57 @@ class CozifyPeakPowerSensor(CozifyBaseEntity, SensorEntity):
             pass
         return self._max_p
 
+class CozifyPeakImportPowerSensor(CozifyBaseEntity, SensorEntity):
+    def __init__(self, coordinator, entry, device_info_data):
+        super().__init__(coordinator, entry, device_info_data)
+        self._attr_name = "Cozify HAN Power Import MAX"
+        self._attr_unique_id = f"{entry.entry_id}_peak_pi"
+        self._attr_native_unit_of_measurement = UnitOfPower.WATT
+        self._attr_device_class = SensorDeviceClass.POWER
+        self._attr_state_class = SensorStateClass.MEASUREMENT
+        self._max_pi, self._day = 0.0, dt_util.now().day
+
+    @property
+    def native_value(self):
+        if not self.coordinator.data:
+            return self._max_pi
+        now = dt_util.now()
+        if now.day != self._day:
+            self._max_pi, self._day = 0.0, now.day
+        try:
+            p_list = self.coordinator.data.get("realtime", {}).get("pi", [])
+            val = float(p_list[0]) if p_list else 0.0
+            if val > self._max_pi:
+                self._max_pi = val
+        except Exception:
+            pass
+        return self._max_pi
+
+class CozifyPeakExportPowerSensor(CozifyBaseEntity, SensorEntity):
+    def __init__(self, coordinator, entry, device_info_data):
+        super().__init__(coordinator, entry, device_info_data)
+        self._attr_name = "Cozify HAN Power Export MAX"
+        self._attr_unique_id = f"{entry.entry_id}_peak_pe"
+        self._attr_native_unit_of_measurement = UnitOfPower.WATT
+        self._attr_device_class = SensorDeviceClass.POWER
+        self._attr_state_class = SensorStateClass.MEASUREMENT
+        self._max_pe, self._day = 0.0, dt_util.now().day
+
+    @property
+    def native_value(self):
+        if not self.coordinator.data:
+            return self._max_pe
+        now = dt_util.now()
+        if now.day != self._day:
+            self._max_pe, self._day = 0.0, now.day
+        try:
+            p_list = self.coordinator.data.get("realtime", {}).get("pe", [])
+            val = float(p_list[0]) if p_list else 0.0
+            if val > self._max_pe:
+                self._max_pe = val
+        except Exception:
+            pass
+        return self._max_pe
 
 class CozifyHANConfigSensor(CozifyBaseEntity, SensorEntity):
     def __init__(self, coordinator, entry, key, name, unit, icon, cat, device_info_data):

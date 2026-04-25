@@ -7,6 +7,10 @@
 
 If you find this integration useful, we would be grateful if you could add a star ⭐. You can do it here: <https://github.com/cozify/han-home-assistant>
 
+## NOTE! - Change in version 1.0.14
+
+Sensor "Cozify HAN Power MAX" will be deprecated in future versions and replaced by "Cozify HAN Power Import MAX" and "Cozify HAN Power Export MAX". Also "Cozify HAN Power Total" and "Cozify HAN Power L1-L3" will be deprecated and removed in future versions and replaced similarily with "Cozify HAN Power Import" & "Cozify HAN Power Import L1-L3" and "Cozify HAN Power Export" and "Cozify HAN Power Export L1-L3"
+
 # Cozify HAN for Home Assistant
 
 Custom integration for Home Assistant to fetch real-time energy data from the Cozify HAN (HAN/P1 meter). The full Cozify HAN API is available at <https://cozify.github.io/han-firmware/han-1.0.html> Using it, you can create additional integrations or other solutions even without Home Assistant. Please note that starting from FW version 1.0.1.7, the Cozify HAN device also includes a local user interface at <http://HAN-IP/ui>
